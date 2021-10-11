@@ -7,12 +7,12 @@ import javax.ws.rs.core.MediaType;
 
 @Path("inventory")
 public class InventoryManagementService {
-
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public Inventory getInventory() {
-		Inventory currentInventory = new Inventory();
-		List<Item> availableItems = new ArrayList<Item>();
+	Inventory currentInventory;
+	List<Item> availableItems;
+	
+	public InventoryManagementService() {
+		currentInventory = new Inventory();
+		availableItems = new ArrayList<Item>();
 		
 		String pic_url1 = "https://cdn.webshopapp.com/shops/221036/files/297679314/fooncase-iphone-11-pro-phone-case-tropical-desire.jpg";
 		String pic_url2 = "https://m.media-amazon.com/images/I/418I24uGLlL.jpg";
@@ -28,6 +28,31 @@ public class InventoryManagementService {
 		availableItems.add(new Item(105, "iphone13Case", 0, 29.99, pic_url5));
 		availableItems.add(new Item(106, "iphoneXCase", 0, 29.99, pic_url6));
 		currentInventory.setItems(availableItems);
+	}
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Inventory getInventory() {
 		return currentInventory;
+	}
+	
+	@GET
+	@Path("/items/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Item getItemByID(@PathParam("id") int id) {
+		for(Item i: availableItems) {
+			if(i.getId() == id) return i;
+		}
+		return new Item(0, "No_item", 0, 0.0, "");
+	}
+	
+	@GET
+	@Path("/items")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Item getItemByItemName(@QueryParam("name") String name) {
+		for(Item i: availableItems) {
+			if(i.getName().equals(name)) return i;
+		}
+		return new Item(0, "No_item", 0, 0.0, "");
 	}
 }
