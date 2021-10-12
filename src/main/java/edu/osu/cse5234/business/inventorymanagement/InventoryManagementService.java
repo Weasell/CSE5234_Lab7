@@ -37,9 +37,9 @@ public class InventoryManagementService {
 	}
 	
 	@GET
-	@Path("/items/{id}")
+	@Path("/itembyid")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Item getItemByID(@PathParam("id") int id) {
+	public Item getItemByID(@QueryParam("id") int id) {
 		for(Item i: availableItems) {
 			if(i.getId() == id) return i;
 		}
@@ -47,7 +47,7 @@ public class InventoryManagementService {
 	}
 	
 	@GET
-	@Path("/items")
+	@Path("/itembyname")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Item getItemByItemName(@QueryParam("name") String name) {
 		for(Item i: availableItems) {
