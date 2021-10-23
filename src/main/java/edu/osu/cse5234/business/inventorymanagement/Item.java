@@ -1,12 +1,25 @@
 package edu.osu.cse5234.business.inventorymanagement;
 
-public class Item {
-	int id;
-	String name;
-	int availableQuantity;
-	double price;
-	String picURL;
+import javax.persistence.*;
 
+
+@Entity
+@Table(name="ITEM") 
+public class Item {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="ID")
+	private int id;
+	@Column(name="NAME")
+	private String name;
+	@Column(name="AVAILABLE_QUANTITY")
+	private int availableQuantity;
+	@Column(name="UNIT_PRICE")
+	private double price;
+	@Column(name="DESCRIPTION")
+	private String picURL;
+
+	
 	public int getId() {
 		return id;
 	}
