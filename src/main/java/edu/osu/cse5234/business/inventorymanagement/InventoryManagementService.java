@@ -55,6 +55,9 @@ public class InventoryManagementService {
 	@Path("/itembyid")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Item getItemByID(@QueryParam("id") int id) {
+		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("inventory-management");
+	    EntityManager entityManager = emfactory.createEntityManager();
+	    List<Item> availableItems = entityManager.createQuery(MY_QUERY, Item.class).getResultList();	
 		for(Item i: availableItems) {
 			if(i.getId() == id) return i;
 		}
@@ -65,6 +68,9 @@ public class InventoryManagementService {
 	@Path("/itembyname")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Item getItemByItemName(@QueryParam("name") String name) {
+		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("inventory-management");
+	    EntityManager entityManager = emfactory.createEntityManager();
+	    List<Item> availableItems = entityManager.createQuery(MY_QUERY, Item.class).getResultList();	
 		for(Item i: availableItems) {
 			if(i.getName().equals(name)) return i;
 		}
